@@ -1,0 +1,341 @@
+;===============================================================
+; GSD-file for product PVS58/PSS58/PVM58/PSM58-Class 2
+; Class2 + diagnostic LED + manufacturer-specific
+; Fa. Pepperl+Fuchs GmbH, Koenigsberger Allee 87, D-68307 Mannheim
+; Telefon: (++49 621) 776-0, Fax: ++49 621 776-1000
+; Version 4.2
+; Update to Resolution 1416 18.12.2012 / RBA
+; Changed ExtUserPrmData=25 "Desired Measuring units" from
+; Unsigned16 to Unsigned32 + Rev. to 3.2 / 2.10.2013 / RBA
+; Changed "Measuring units per revolution"+"Total measuring range"
+; +"Lower limit switch"+"Higher limit switch" to 65536
+; + Rev. to 3.3  14.10.2013 / RBA
+; +"Lower limit switch"+"Higher limit switch" to 65535
+; + Rev. to 3.4  14.10.2013 / RBA
+; Use of 32Bit values instead of division 
+; into high and low word
+; + Rev. to 4.2	8.8.2014  /	RBA
+;===============================================================
+
+
+#Profibus_DP
+
+; Parameter text for code sequence
+PrmText=1
+Text(0)="Steigend im Uhrzeigersinn (0)"
+Text(1)="Fallend im Uhrzeigersinn (1)"
+EndPrmText
+
+; Parameter text Enable/Disable
+PrmText=2
+Text(0)="Ausgeschaltet"
+Text(1)="Eingeschaltet"
+EndPrmText
+
+; Parameter text Yes/No
+PrmText=3
+Text(0)="Nein"
+Text(1)="Ja"
+EndPrmText
+
+; Parameter text for basis of desired measuring units
+PrmText=4
+Text(0)="Umdrehung"
+Text(1)="Maximale Gesamtauflösung"
+Text(2)="Physikalische Messschritte"
+EndPrmText
+
+;Parameter text for velocity 
+PrmText=5
+Text(0)="Schritte/1000 ms"
+Text(1)="Schritte/100 ms"
+Text(2)="Schritte/10 ms"
+Text(3)="Umdrehungen pro Minute"
+EndPrmText
+
+; User Parameter "Code sequence"
+ExtUserPrmData=1 "Zählrichtung"
+Bit(0) 0 0-1
+Prm_Text_Ref=1
+EndExtUserPrmData
+
+; User Parameter "Class 2 functionality"
+ExtUserPrmData=2 "Klasse 2 Funktionalität"
+Bit(1) 1 0-1
+Prm_Text_Ref=2
+EndExtUserPrmData
+
+; User Parameter "Scaling function"
+ExtUserPrmData=3 "Skalierungsfunktion"
+Bit(3) 1 0-1
+Prm_Text_Ref=2
+EndExtUserPrmData
+
+;User Parameter "Steps per revolution " for values > 16 Bit
+ExtUserPrmData=4 "Auflösung pro Umdrehung"
+Unsigned32 4096 1-65536
+EndExtUserPrmData
+
+;User Parameter "Total measuring range " for values > 16 Bit
+ExtUserPrmData=6 "Gesamtauflösung"
+Unsigned32  16777216 0-1073741824
+EndExtUserPrmData
+
+; User Parameter "Desired measuring units" for values > 16 Bit
+ExtUserPrmData=8 "Gewünschte Messschritte"
+Unsigned32 4096 0-1073741824
+EndExtUserPrmData
+
+;User Parameter "Physical impulses" for values > 16 Bit 
+ExtUserPrmData=10 "Physikal. Messschritte"
+Unsigned32  4096 0-1073741824
+EndExtUserPrmData
+
+;User Parameter "Lower limit switch" (enable/disable)
+ExtUserPrmData=12 "Unterer Endschalter"
+Bit(5) 0 0-1
+Prm_Text_Ref=2
+EndExtUserPrmData
+
+;User Parameter "Upper limit switch" (enable/disable)
+ExtUserPrmData=13 "Oberer Endschalter"
+Bit(6) 0 0-1
+Prm_Text_Ref=2
+EndExtUserPrmData
+
+;User Parameter "Lower limit switch" for values > 16 Bit
+ExtUserPrmData=14 "Unterer Endschalter"
+Unsigned32  0 0-1073741823
+EndExtUserPrmData
+
+
+;User Parameter "Upper limit switch"  for values > 16 Bit
+ExtUserPrmData=16 "Oberer Endschalter"
+Unsigned32 32767  0-1073741823
+EndExtUserPrmData
+
+;User Parameter "Lower limit switch" for Singleturn (max. 65535)
+ExtUserPrmData=18 "Unterer Endschalter"
+Unsigned16  0 0-65535
+EndExtUserPrmData
+
+;User Parameter "Upper limit switch" for Singleturn (max. 65535)
+ExtUserPrmData=19 "Oberer Endschalter"
+Unsigned16   4096 0-65535
+EndExtUserPrmData
+
+;User Parameter "basis for desired measuring units"
+ExtUserPrmData=20 "Gewünschte Messschritte pro"
+BitArea(0-1) 0 0-2
+Prm_Text_Ref=4
+EndExtUserPrmData
+
+;User Parameter "Shorter Diagnostics"
+ExtUserPrmData=21 "Kürzere Diagnose (16 Bytes)"
+Bit(3) 0 0-1
+Prm_Text_Ref=3
+EndExtUserPrmData
+
+; User Parameter "Unit velocity output" 
+ExtUserPrmData=22 "Zeitbasis Geschwindigkeit"
+BitArea(4-5) 0 0-3
+Prm_Text_Ref=5
+EndExtUserPrmData
+
+;User Parameter "Commissioning mode" (default disabled)
+ExtUserPrmData=23 "Inbetriebnahmemodus"
+Bit(2) 0 0-1
+Prm_Text_Ref=2
+EndExtUserPrmData
+
+;User Parameter "Total measuring range " for Singleturn (max. 65536, Default 4096)
+ExtUserPrmData=24 "Gesamtauflösung"
+Unsigned32  4096 0-65536
+EndExtUserPrmData
+
+; User Parameter "Desired measuring units" for Singleturn (max. 65536, Default 4096)
+ExtUserPrmData=26 "Gewünschte Messschritte"
+Unsigned32  4096 0-65536
+EndExtUserPrmData
+
+;User Parameter "Physical impulses"  for Singleturn (max. 65536, Default 4096)
+ExtUserPrmData=28 "Physikal. Messschritte"
+Unsigned32  4096 0-65536
+EndExtUserPrmData
+
+;User Parameter "Total measuring range " for values > 16 Bit and < 25 Bit
+ExtUserPrmData=32 "Gesamtauflösung"
+Unsigned32  16777216 0-33554432
+EndExtUserPrmData
+
+GSD_Revision=2
+Vendor_Name = "P+F GmbH"
+Model_Name = "P+F Encoder"
+Revision = "V4.2"
+Ident_Number = 0x5046
+Protocol_Ident = 0
+Station_Type = 0
+FMS_supp = 0
+DP_Encoder_class = 2
+DP_Encoder_profile_version = 1.1
+DP_Encoder_manufacturer_specific_functions = 1
+Hardware_Release = "5.0"
+Software_Release = "4.0"
+9.6_supp = 1
+19.2_supp = 1
+93.75_supp = 1
+187.5_supp = 1
+500_supp = 1
+1.5M_supp = 1
+3M_supp = 1
+6M_supp = 1
+12M_supp = 1
+MaxTsdr_9.6 = 60
+MaxTsdr_19.2 = 60
+MaxTsdr_93.75 = 60
+MaxTsdr_187.5 = 60
+MaxTsdr_500 = 100
+MaxTsdr_1.5M = 150
+MaxTsdr_3M = 250
+MaxTsdr_6M = 450
+MaxTsdr_12M = 800
+Implementation_Type = "DPC31"
+Bitmap_Device = "PVM58xxn"
+
+
+OrderNumber = "P+F  Encoder"
+
+Freeze_Mode_supp = 1
+Sync_Mode_supp = 1
+Auto_Baud_supp = 1
+Set_Slave_Add_supp = 0
+Min_Slave_Intervall = 0x0001
+Max_Diag_Data_Len=59
+
+Modul_Offset=1
+Slave_Family=7@PEPPERL+FUCHS
+Modular_Station = 1
+Max_Module = 1
+
+Unit_Diag_Bit(4)    = "Speicherfehler"
+Unit_Diag_Bit(108)  = "Betriebszeitwarnung"
+
+Max_Input_Len    = 8
+Max_Output_Len   = 4
+Max_Data_len     = 12
+Max_User_Prm_Data_Len = 0x20
+
+Module= "Class 1 Singleturn" 0xD0 	; 1 Wort Eingang konsistent
+Ext_Module_Prm_Data_Len= 2
+Ext_User_Prm_Data_Const(0) = 0x00,0x00
+Ext_User_Prm_Data_Ref(1) = 1				; Code sequence
+EndModule
+
+Module= "Class 1 Multiturn" 0xD1		; 2 Wort Eingang konsistent
+Ext_Module_Prm_Data_Len= 2
+Ext_User_Prm_Data_Const(0) = 0x00,0x00
+Ext_User_Prm_Data_Ref(1) = 1				; Code sequence
+EndModule
+
+Module= "Class 2 Singleturn" 0xF0		; 1 Wort Ein-/Ausgang konsistent
+Ext_Module_Prm_Data_Len= 18
+Ext_User_Prm_Data_Const(0) = 0x00,0x0A,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+Ext_User_Prm_Data_Ref(1) = 1				; Code sequence
+Ext_User_Prm_Data_Ref(1) = 2				; Class 2 functionality
+Ext_User_Prm_Data_Ref(1) = 3				; Scaling function control
+Ext_User_Prm_Data_Ref(2) = 4		   	; Steps per revolution
+Ext_User_Prm_Data_Ref(6) = 24 		  	; Total measuring range
+EndModule
+
+Module= "Class 2 Multiturn" 0xF1		; 2 Wort Ein-/Ausgang konsistent
+Ext_Module_Prm_Data_Len= 18
+Ext_User_Prm_Data_Const(0) = 0x00,0x0A,0x00,0x00,0x10,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+Ext_User_Prm_Data_Ref(1) = 1				; Code sequence
+Ext_User_Prm_Data_Ref(1) = 2				; Class 2 functionality
+Ext_User_Prm_Data_Ref(1) = 3				; Scaling function control
+Ext_User_Prm_Data_Ref(2) = 4		   	; Steps per revolution 
+Ext_User_Prm_Data_Ref(6) = 6   			; Total measuring range (high)
+EndModule
+
+Module= "P+F Version 2.1 Singleturn" 0xF1	; 2 Wort Ein-/Ausgang konsistent
+Ext_Module_Prm_Data_Len = 32
+Ext_User_Prm_Data_Const(0) = 0x00,0x4a,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x00,0x00
+Ext_User_Prm_Data_Ref(1)  =  1			; Code sequence
+Ext_User_Prm_Data_Ref(1)  =  3			; Scaling function control
+Ext_User_Prm_Data_Ref(2)  =  26  		; Desired measuring units
+Ext_User_Prm_Data_Ref(18) =  20 		; Desired measuring units reference
+Ext_User_Prm_Data_Ref(27) =	28 		; Physical impulses
+Ext_User_Prm_Data_Ref(6)  =  24  		; Total measuring range
+Ext_User_Prm_Data_Ref(18) =  12 		; Lower limit switch (de)activate
+Ext_User_Prm_Data_Ref(21) =  18 		; Lower limit switch
+Ext_User_Prm_Data_Ref(18) =  13  		; Upper limit switch (de)activate
+Ext_User_Prm_Data_Ref(25) =  19 		; Upper limit switch
+Ext_User_Prm_Data_Ref(18) =  23	 		; Commissioning mode
+Ext_User_Prm_Data_Ref(18) =  21	 		; Shorter diagnostics (16 bytes)
+EndModule
+
+Module= "P+F Version 2.1 Multiturn" 0xF1	; 2 Wort Ein-/Ausgang konsistent
+Ext_Module_Prm_Data_Len= 32
+Ext_User_Prm_Data_Const(0) = 0x00,0x4a,0x00,0x00,0x10,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x10,0x00,0x02
+Ext_User_Prm_Data_Ref(1)  =  1			; Code sequence
+Ext_User_Prm_Data_Ref(1)  =  3			; Scaling function control
+Ext_User_Prm_Data_Ref(2)  =  8  		; Desired measuring units 
+Ext_User_Prm_Data_Ref(18) =  20			; Desired measuring units reference
+Ext_User_Prm_Data_Ref(27) =  10 		; Physical impulses
+Ext_User_Prm_Data_Ref(6)  =  32  		; Total measuring range
+Ext_User_Prm_Data_Ref(18) =  12			; Lower limit switch (de)activate
+Ext_User_Prm_Data_Ref(19) =  14 		; Lower limit switch
+Ext_User_Prm_Data_Ref(18) =  13			; Upper limit switch (de)activate
+Ext_User_Prm_Data_Ref(23) =  16 		; Upper limit switch
+Ext_User_Prm_Data_Ref(18) =  23			; Commissioning mode
+Ext_User_Prm_Data_Ref(18) =  21			; Shorter diagnostics (16 bytes)
+EndModule
+
+Module= "P+F Version 2.2 Singleturn" 0xF1,0xD0 ; 2 Wort Ein-/Ausgang konsistent + 1 Wort Eingang konsistent
+Ext_Module_Prm_Data_Len= 32
+Ext_User_Prm_Data_Const(0) = 0x00,0x4a,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x00,0x00
+Ext_User_Prm_Data_Ref(1)  =	 1			; Code sequence
+Ext_User_Prm_Data_Ref(1)  =	 3			; Scaling function control
+Ext_User_Prm_Data_Ref(2)  =	 26  		; Desired measuring units
+Ext_User_Prm_Data_Ref(18) =	 20		; Desired measuring units reference
+Ext_User_Prm_Data_Ref(27) =	 28 		; Physical impulses
+Ext_User_Prm_Data_Ref(6)  = 	 24   	; Total measuring range
+Ext_User_Prm_Data_Ref(18) =	 12		; Lower limit switch (de)activate
+Ext_User_Prm_Data_Ref(21) =	 18 		; Lower limit switch
+Ext_User_Prm_Data_Ref(18) =	 13		; Upper limit switch (de)activate
+Ext_User_Prm_Data_Ref(25) =	 19 		; Upper limit switch
+Ext_User_Prm_Data_Ref(31) =	 22		; Velocity output unit
+Ext_User_Prm_Data_Ref(18) =	 23		; Commissioning mode
+Ext_User_Prm_Data_Ref(18) =	 21		; Shorter diagnostics (16 bytes)
+EndModule
+
+Module= "P+F Version 2.2 Multiturn" 0xF1,0xD0 ; 2 Wort Ein-/Ausgang konsistent + 1 Wort Eingang konsistent
+Ext_Module_Prm_Data_Len= 32
+Ext_User_Prm_Data_Const(0) = 0x00,0x4a,0x00,0x00,0x10,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x10,0x00,0x02
+Ext_User_Prm_Data_Ref(1)  =	 1			; Code sequence
+Ext_User_Prm_Data_Ref(1)  =	 3			; Scaling function control
+Ext_User_Prm_Data_Ref(2)  =	 8  		; Desired measuring units
+Ext_User_Prm_Data_Ref(18) =	 20		; Desired measuring units reference
+Ext_User_Prm_Data_Ref(27) =	 10 		; Physical impulses
+Ext_User_Prm_Data_Ref(6)  =	 32   	; Total measuring range
+Ext_User_Prm_Data_Ref(18) =	 12		; Lower limit switch (de)activate
+Ext_User_Prm_Data_Ref(19) =	 14 		; Lower limit switch
+Ext_User_Prm_Data_Ref(18) =	 13		; Upper limit switch (de)activate
+Ext_User_Prm_Data_Ref(23) =	 16 		; Upper limit switch
+Ext_User_Prm_Data_Ref(31) =	 22 		; Velocity output unit
+Ext_User_Prm_Data_Ref(18) =	 23		; Commissioning mode
+Ext_User_Prm_Data_Ref(18) =	 21		; Shorter diagnostics (16 bytes)
+EndModule
+
+
+
+
+
+
+
+
+
+
+
+
+
